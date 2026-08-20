@@ -1,0 +1,14 @@
+# Environment variables (secrets)
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# ChromaDB local storage 
+data/chroma_db/
+
+# OS files
+.DS_Store

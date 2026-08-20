@@ -1,1 +1,0 @@
-# modular-rag-research-assistant

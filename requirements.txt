@@ -1,0 +1,6 @@
+tavily-python
+python-dotenv
+groq
+chromadb
+sentence-transformers
+dotenv
