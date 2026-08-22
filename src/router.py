@@ -34,7 +34,7 @@ def decision_router(user_question: str) -> str | None:
 
     decision = response.choices[0].message.content.strip().lower()
 
-    if decision in ["document", "sql", "web"]:
+    if decision in ["document", "sql", "web", "none"]:
         return decision
     else:
         print(f"⚠️ Router couldn't classify. Raw model output: '{decision}'")
