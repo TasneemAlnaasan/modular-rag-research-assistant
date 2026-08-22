@@ -5,3 +5,5 @@ chromadb
 sentence-transformers
 dotenv
 langgraph
+fastapi
+uvicorn

@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 from groq import Groq
 from langgraph.graph import StateGraph, END
 
-from router import decision_router
-from search_web import search_web
-from search_documents import search_documents
-from query_sql import query_sql
+from .router import decision_router
+from .search_web import search_web
+from .search_documents import search_documents
+from .query_sql import query_sql
 
 load_dotenv()
 
