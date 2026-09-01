@@ -7,3 +7,5 @@ dotenv
 langgraph
 fastapi
 uvicorn
+requests
+streamlit 
