@@ -8,10 +8,12 @@ from .router import decision_router
 from .search_web import search_web
 from .search_documents import search_documents
 from .query_sql import query_sql
+from .logger import get_logger
 
 load_dotenv()
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
+logger = get_logger(__name__)
 
 
 # ---------- 1. الـ State ----------
@@ -26,24 +28,31 @@ class GraphState(TypedDict):
 def router_node(state: GraphState) -> dict:
     question = state["question"]
     decision = decision_router(question)
+    logger.info(f"Question: '{question}' -> Router decision: '{decision}'")
     return {"decision": decision}
 
 
 def document_node(state: GraphState) -> dict:
     question = state["question"]
     raw_result = search_documents(question)
+    found = bool(raw_result)
+    logger.info(f"Question: '{question}' | Document search found result: {found}")
     return {"raw_result": raw_result}
 
 
 def sql_node(state: GraphState) -> dict:
     question = state["question"]
     raw_result = query_sql(question)
+    found = bool(raw_result)
+    logger.info(f"Question: '{question}' | SQL query found result: {found}")
     return {"raw_result": raw_result}
 
 
 def web_node(state: GraphState) -> dict:
     question = state["question"]
     raw_result = search_web(question)
+    found = raw_result is not None
+    logger.info(f"Question: '{question}' | Web search found result: {found}")
     return {"raw_result": raw_result}
 
 
@@ -67,7 +76,10 @@ def generation_node(state: GraphState) -> dict:
         temperature=0.3
     )
 
-    return {"final_answer": response.choices[0].message.content.strip()}
+    final_answer = response.choices[0].message.content.strip()
+    logger.info(f"Source: '{state['decision']}' | Answer length: {len(final_answer)} chars")
+
+    return {"final_answer": final_answer}
 
 
 # ---------- 3. دالة التوجيه الشرطي (Conditional Edge) ----------
