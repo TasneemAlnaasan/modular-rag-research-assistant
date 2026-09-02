@@ -1,5 +1,5 @@
 
-```markdown
+
 # 🔍 Multi-Source Research Assistant
 
 A **Modular RAG** system that routes user questions to the right data source — vector database, SQL database, or live web search — instead of relying on a single fixed retrieval method.
@@ -124,4 +124,3 @@ streamlit run src/ui.py
 
 - Add a quality-check step after generation that falls back to web search if the retrieved context doesn't answer the question
 - Swap the dataset domain (e.g. model pricing/performance comparisons) without touching the core architecture
-```
