@@ -2,6 +2,8 @@ tavily-python
 python-dotenv
 groq
 chromadb
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
 sentence-transformers
 dotenv
 langgraph

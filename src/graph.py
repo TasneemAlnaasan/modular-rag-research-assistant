@@ -16,7 +16,7 @@ client = Groq(api_key=os.environ["GROQ_API_KEY"])
 logger = get_logger(__name__)
 
 
-# ---------- 1. الـ State ----------
+# State
 class GraphState(TypedDict):
     question: str
     decision: Optional[str]
@@ -24,7 +24,7 @@ class GraphState(TypedDict):
     final_answer: Optional[str]
 
 
-# ---------- 2. العقد (Nodes) ----------
+# Nodes
 def router_node(state: GraphState) -> dict:
     question = state["question"]
     decision = decision_router(question)
@@ -57,7 +57,7 @@ def web_node(state: GraphState) -> dict:
 
 
 def none_node(state: GraphState) -> dict:
-    return {"final_answer": "عذرًا، ما قدرت أفهم سؤالك بوضوح. ممكن تعيدي صياغته؟"}
+    return {"final_answer": "Sorry, I couldn't understand your question clearly. Could you please rephrase it?"}
 
 
 def generation_node(state: GraphState) -> dict:
@@ -65,7 +65,7 @@ def generation_node(state: GraphState) -> dict:
     raw_result = state["raw_result"]
 
     if not raw_result:
-        return {"final_answer": "عذرًا، ما لقيت معلومة كافية للإجابة على سؤالك."}
+        return {"final_answer": "Sorry, I couldn't understand your question clearly. Could you please rephrase it?"}
 
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
@@ -82,12 +82,12 @@ def generation_node(state: GraphState) -> dict:
     return {"final_answer": final_answer}
 
 
-# ---------- 3. دالة التوجيه الشرطي (Conditional Edge) ----------
+# Conditional Edge
 def route_decision(state: GraphState) -> str:
     return state["decision"]
 
 
-# ---------- 4. بناء الـ Graph ----------
+# Graph
 graph = StateGraph(GraphState)
 
 graph.add_node("router", router_node)
@@ -119,7 +119,7 @@ graph.add_edge("none", END)
 app = graph.compile()
 
 
-# ---------- 5. اختبار ----------
+# Tests
 if __name__ == "__main__":
     test_questions = [
         "What is Anthropic's vision?",
