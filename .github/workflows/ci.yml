@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check imports (basic sanity check)
+        run: python -c "from src.router import decision_router; from src.search_web import search_web; from src.search_documents import search_documents; from src.query_sql import query_sql; print('All imports successful')"
+
+      - name: Run router unit test
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python -c "from src.router import decision_router; result = decision_router('What is Anthropic vision?'); assert result == 'document', f'Expected document, got {result}'; print('Router test passed')"
