@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
+import os 
 
-API_URL = "http://localhost:8000/ask"
+API_URL = os.environ.get("API_URL", "http://localhost:8000/ask")
 
 st.set_page_config(page_title="Multi-Source Research Assistant", page_icon="🔍")
 
