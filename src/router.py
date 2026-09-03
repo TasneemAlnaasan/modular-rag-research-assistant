@@ -4,7 +4,9 @@ from groq import Groq
 
 load_dotenv()
 
-client = Groq(api_key=os.environ["GROQ_API_KEY"])
+groq_api_key = os.getenv("GROQ_API_KEY")
+
+client = Groq(api_key=groq_api_key) if groq_api_key else None
 
 system_prompt = """You are a routing assistant. Classify the user's question into exactly one category:
 
@@ -23,21 +25,30 @@ Respond with ONLY one word: document, sql, web, or none. No explanation."""
 
 
 def decision_router(user_question: str) -> str | None:
-    response = client.chat.completions.create(
-        model="openai/gpt-oss-20b",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_question}
-        ],
-        temperature=0
-    )
+    if not client:
+        print("⚠️ Groq client is not initialized. GROQ_API_KEY is missing.")
+        return None
 
-    decision = response.choices[0].message.content.strip().lower()
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",  # نموذج رسمي معتمد ومتاح على Groq
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_question}
+            ],
+            temperature=0
+        )
 
-    if decision in ["document", "sql", "web", "none"]:
-        return decision
-    else:
-        print(f"⚠️ Router couldn't classify. Raw model output: '{decision}'")
+        decision = response.choices[0].message.content.strip().lower()
+
+        if decision in ["document", "sql", "web", "none"]:
+            return decision
+        else:
+            print(f"⚠️ Router couldn't classify. Raw model output: '{decision}'")
+            return None
+
+    except Exception as e:
+        print(f"❌ Error during routing execution: {e}")
         return None
 
 
