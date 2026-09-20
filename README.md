@@ -53,7 +53,7 @@ The dataset covers 7 major AI companies: **OpenAI, Anthropic, Google DeepMind, G
 - `data/documents/` — short written profiles (company background, products, vision)
 - `data/company_data.db` — SQLite table with funding, valuation, and founding data
 
-> The architecture is fully domain-agnostic — swapping in a different dataset (e.g. drug information, model pricing comparisons) requires no changes to the routing, retrieval, or generation logic.
+
 
 ## 🛠️ Tech stack
 
