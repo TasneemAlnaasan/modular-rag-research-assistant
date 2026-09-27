@@ -4,7 +4,13 @@ from tavily import TavilyClient
 
 load_dotenv()
 
-tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+tavily_api_key = os.getenv("TAVILY_API_KEY")
+
+if tavily_api_key:
+  tavily_client = TavilyClient(api_key=tavily_api_key)
+else:
+  print("⚠️ Warning: TAVILY_API_KEY is not set.")
+  tavily_client = None
 
 
 def search_web(question: str) -> str:
