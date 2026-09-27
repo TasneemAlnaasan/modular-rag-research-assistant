@@ -3,7 +3,7 @@ from datetime import date
 
 def update_company(company_name: str, **fields):
     """
-    Update any number of columns for a specified comoany.
+    Update any number of columns for a specified company.
     Example: update_company("openai", valuation_usd_millions=7000000, last_funding_round="Series X")
     """
     conn = sqlite3.connect("data/company_data.db")
