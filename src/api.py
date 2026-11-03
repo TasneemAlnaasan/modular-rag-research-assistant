@@ -25,7 +25,6 @@ def health_check():
 def ask_question(request: QuestionRequest):
   try:
     result = graph_app.invoke({"question": request.question})
-    print("Graph execution result:", result)
     final_ans = result.get("final_answer") or result.get("answer") or str(result)
     return AnswerResponse(question=request.question, answer=final_ans)
 
