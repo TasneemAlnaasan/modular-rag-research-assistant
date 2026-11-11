@@ -4,7 +4,7 @@
 
 A **Modular RAG** system that routes user questions to the right data source — vector database, SQL database, or live web search — instead of relying on a single fixed retrieval method.
 
-🔗 **Live demo:** [Frontend]( https://modular-rag-research-assistant-frontend.onrender.com) | [API docs](https://modular-rag-research-assistant.onrender.com/docs)
+🔗 **Live (https://modular-rag.streamlit.app/) | [API docs](https://modular-rag-research-assistant.onrender.com/docs)
 
 ---
 
@@ -66,7 +66,8 @@ The dataset covers 7 major AI companies: **OpenAI, Anthropic, Google DeepMind, G
 | Web search | Tavily API |
 | API | FastAPI |
 | UI | Streamlit |
-| Deployment | Docker + Render |
+| Deployment |  Render hosting | Docker on Render (free tier) |
+             | Frontend hosting | Streamlit Community Cloud |
 | CI | GitHub Actions |
 
 All tools are free-tier.
