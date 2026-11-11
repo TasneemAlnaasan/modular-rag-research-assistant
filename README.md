@@ -66,8 +66,8 @@ The dataset covers 7 major AI companies: **OpenAI, Anthropic, Google DeepMind, G
 | Web search | Tavily API |
 | API | FastAPI |
 | UI | Streamlit |
-| Deployment |  Render hosting | Docker on Render (free tier) |
-             | Frontend hosting | Streamlit Community Cloud |
+| Deployment (Backend) | Render hosting, Docker on Render (free tier) |
+| Deployment (frontend) | Streamlit Community Cloud |
 | CI | GitHub Actions |
 
 All tools are free-tier.
